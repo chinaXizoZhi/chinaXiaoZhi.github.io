@@ -6,7 +6,7 @@
   <link href="https://chinaxizozhi.chinaxiaozhi.github.io/atom.xml" rel="self"/>
   
   <link href="https://chinaxizozhi.chinaxiaozhi.github.io/"/>
-  <updated>2021-07-19T08:53:06.773Z</updated>
+  <updated>2021-07-20T08:09:28.038Z</updated>
   <id>https://chinaxizozhi.chinaxiaozhi.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>hdfs shell操作</title>
+    <link href="https://chinaxizozhi.chinaxiaozhi.github.io/2021/07/20/HDFSshell%E6%93%8D%E4%BD%9C/"/>
+    <id>https://chinaxizozhi.chinaxiaozhi.github.io/2021/07/20/HDFSshell%E6%93%8D%E4%BD%9C/</id>
+    <published>2021-07-19T16:00:00.000Z</published>
+    <updated>2021-07-20T08:09:28.038Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="hdfs-shell操作"><a href="#hdfs-shell操作" class="headerlink" title="hdfs shell操作"></a>hdfs shell操作</h2><h3 id="1-1-上传"><a href="#1-1-上传" class="headerlink" title="1.1_上传"></a>1.1_上传</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#创建文件夹</span></span><br><span class="line">hadoop fs -mkdir 文件名</span><br><span class="line"></span><br><span class="line"><span class="comment">#上传</span></span><br><span class="line">hadoop fs -moveFromLocal /需要上传的文件夹 /上传的位置</span><br><span class="line"></span><br><span class="line"><span class="comment">#拷贝</span></span><br><span class="line">hadoop fs -copyFromLocal 本地文件 /上传的位置</span><br><span class="line">等同于hadoop fs -put 本地文件 /上传的位置</span><br><span class="line"></span><br><span class="line"><span class="comment">#追加</span></span><br><span class="line">hadoop fs -appendToFile  本地文件 /追加的位置</span><br></pre></td></tr></table></figure><h3 id="1-2-下载"><a href="#1-2-下载" class="headerlink" title="1.2_下载"></a>1.2_下载</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下载到本地</span></span><br><span class="line">hadoop fs -copyToLocal /拷贝文件地址  /到本地地址</span><br><span class="line">等同于hadoop fs -get /拷贝文件地址  /到本地地址</span><br></pre></td></tr></table></figure><h3 id="1-3-HDFS直接操作的命令"><a href="#1-3-HDFS直接操作的命令" class="headerlink" title="1.3_HDFS直接操作的命令"></a>1.3_HDFS直接操作的命令</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查询目录信息</span></span><br><span class="line">ls /</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看文件</span></span><br><span class="line">hadoop fs -cat  </span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 修改分组信息</span></span><br><span class="line">[lizhi@hadoop102 hadoop-3.3.1]$ hadoop fs -chown lizhi:lizhi /sanguo/shuguo.txt</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建文件夹</span></span><br><span class="line"></span><br><span class="line">hadoop fs -mkdir 文件名</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 拷贝</span></span><br><span class="line">hadoop fs -cp</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">移动剪切</span></span><br><span class="line">hadoop fs -mv</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看文件末尾的信息</span></span><br><span class="line">[lizhi@hadoop102 hadoop-3.3.1]$ hadoop fs -tail /sanguo/shuguo.txt</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 删除</span></span><br><span class="line">hadoop fs -rm</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 递归删除</span></span><br><span class="line">hadoop fs -rm -r</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看文件大小</span></span><br><span class="line">[lizhi@hadoop102 hadoop-3.3.1]$ hadoop fs -du -s -h /sanguo</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看文件分开的大小</span></span><br><span class="line">[lizhi@hadoop102 hadoop-3.3.1]$ hadoop fs -du  -h /sanguo</span><br><span class="line">17  51  /sanguo/shuguo.txt</span><br><span class="line">7   21  /sanguo/weiguo.txt</span><br><span class="line">7   21  /sanguo/wuguo.txt</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;hdfs-shell操作&quot;&gt;&lt;a href=&quot;#hdfs-shell操作&quot; class=&quot;headerlink&quot; title=&quot;hdfs shell操作&quot;&gt;&lt;/a&gt;hdfs shell操作&lt;/h2&gt;&lt;h3 id=&quot;1-1-上传&quot;&gt;&lt;a href=&quot;#1-1-上传&quot;</summary>
+      
+    
+    
+    
+    <category term="大数据" scheme="https://chinaxizozhi.chinaxiaozhi.github.io/category/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+    
+    <category term="hadoop" scheme="https://chinaxizozhi.chinaxiaozhi.github.io/tag/hadoop/"/>
+    
+  </entry>
   
   <entry>
     <title>个人学习记录</title>
