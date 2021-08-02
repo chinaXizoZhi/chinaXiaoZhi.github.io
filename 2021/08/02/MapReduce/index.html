@@ -6,7 +6,7 @@
     <meta name="referrer" content="origin">
     <meta http-equiv="Cache-Control" content="no-transform">
     <meta http-equiv="Cache-Control" content="no-siteapp">
-    <title>标签 - hadoop</title>
+    <title>MapReduce笔记</title>
 
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css">
@@ -17,91 +17,172 @@
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css">
 
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/index.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css">
+    
+        <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css">
+    
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
+
 <meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="小志的博客" type="application/atom+xml">
 </head>
 <body>
     <a id="cover"></a>
     <div id="header">
-    <div class="header" >
+    <div class="header">
         <div class="vertical">
             <div class="inner">
-                <h1 class="header-title"></h1>
-                <h2 class="header-description" id="hitokoto"></h2>
-                <h3 class="header-info" id="hitokotoAuthor"></h3>
-                <!--
-                <h1 class="header-subtitle"></h1>
-                <p class="header-subinfo"></p>
-                -->
+                <h1 class="header-subtitle">MapReduce笔记</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2021-08-02
+                        </span>
+                        
+                            <span id="/2021/08/02/MapReduce/" class="leancloud_visitors" data-flag-title="MapReduce笔记">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2021/08/02/MapReduce/"></span>
+                        </span>  
+                    </p>                 
+                </div>
             </div>
         </div>
-        <a class="scroll-down" href="javascript:;" target="_self" data-offset="-45">
-            <span class="hidden">Scroll Down</span>
-            <i class="scroll-down-icon iconfont icon-return"></i>
-        </a>
+        <canvas id="articleHeaderCanvas"></canvas>
     </div>
 </div>
     <div id="container">
     <div id="content">
-        <div class="articles">
-    
-        <div class="article">
-            <div class="article-title">
-                <a href="/2021/08/02/MapReduce/">MapReduce笔记</a>
-                
-                    <span class="article-sticky">置顶</span>
-                
+        <div id="article">
+    <div class="toc"></div>
+    <div class="article-body">
+        <h3 id="MapReduce"><a href="#MapReduce" class="headerlink" title="MapReduce"></a>MapReduce</h3><h4 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1.介绍"></a>1.介绍</h4><h5 id="优点"><a href="#优点" class="headerlink" title="优点 :"></a>优点 :</h5><ol>
+<li>易于编程,用户只需关心业务逻辑,实现框架的接口</li>
+<li>良好的扩展性 : 可以动态增加服务器.解决资源不够问题</li>
+<li>高容错性 : 任何一台机器挂掉,可以将任务转移到其他节点</li>
+<li>适合海量数据的计算,几千台服务器共同计算</li>
+</ol>
+<h5 id="缺点"><a href="#缺点" class="headerlink" title="缺点 :"></a>缺点 :</h5><ol>
+<li>不擅长实时计算</li>
+<li>不擅长流式计算 </li>
+<li>不擅长DAG有向无环图计算</li>
+</ol>
+<h4 id="2-MapReduce进程"><a href="#2-MapReduce进程" class="headerlink" title="2.MapReduce进程"></a>2.MapReduce进程</h4><ul>
+<li>一个完整的MapReduce程序在分布式运行时有三类实例进程<ul>
+<li>MrAppMaster: 负责整个阶段的整个数据处理流程</li>
+<li>MapTask: 负责Map阶段的整个数据处理流程</li>
+<li>ReduceTask:负责Reduce阶段的整个数据处理流程</li>
+</ul>
+</li>
+<li>分区总结 : <ul>
+<li>自定义分区,不能少于你你自己定义的分区数.会报io异常</li>
+<li>自定义分区设置多余你自己定义的分区数,会浪费资源</li>
+<li>自定义分区如果设置成1,会走默认的类.</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-排序-："><a href="#3-排序-：" class="headerlink" title="3.排序 ："></a>3.排序 ：</h4><ul>
+<li>自定义排序需要继承<code>WritableComparable</code>接口重写里面的方法</li>
+<li>在方法里进行排序(或者二次排序)</li>
+</ul>
+<h4 id="4-Map-Reduce"><a href="#4-Map-Reduce" class="headerlink" title="4.Map Reduce"></a>4.Map Reduce</h4><ul>
+<li>InputFormat<ul>
+<li>默认的是TextInputFormat kv  Key偏移量  V : 一行内容</li>
+<li>处理小文件ComBineTextInputFormat 把多个文件合并到一起统一切片</li>
+</ul>
+</li>
+<li>Mapper<ul>
+<li>map()<ul>
+<li>setup()初始化  map()用户的业务逻辑  clearup() 关闭资源;</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>分区<ul>
+<li>默认分区HasParitioner  默认按照key的hash值%numreducetask个数</li>
+<li>自定义分区</li>
+</ul>
+</li>
+<li>排序<ul>
+<li>  部分排序 : 每一个输出的文件内部有序.</li>
+<li>全排序 : 一个reduce, 对所有数据大排序.</li>
+<li>二次排序 : 自定义排序范畴,–实现 wriableCompare接口, 重写compareTo方法</li>
+</ul>
+</li>
+<li>Reduce<ul>
+<li>Combiner<ul>
+<li>前提不影响最终的业务逻辑(求和没问题 求平均值)</li>
+<li>提前聚合map端完成的 =&gt; 解决数据倾斜的一个方法</li>
+</ul>
+</li>
+<li>用户的业务逻辑<ul>
+<li>setup()初始化  reduce()用户的业务逻辑  clearup() 关闭资源;</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>OutputFormat<ul>
+<li>默认是TextOutputFormat  按行输出到文件</li>
+<li>自定义</li>
+</ul>
+</li>
+</ul>
+
+        <p class="suffix-end">__END__</p>
+        <div class="suffix-box">
+            <div class="suffix-box-left">
+                <img src="https://gitee.com/china_xiaozhi/blog_images/raw/master/%E6%9C%AA%E6%A0%87%E9%A2%98-1.png" alt="小志">
             </div>
-            <div class="article-abstract">
-                
+            <div class="suffix-box-right">
+                <span class="suffix-box-title">文章作者</span>：小志
+                <br>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2021/08/02/MapReduce/" target="_blank">MapReduce笔记</a>
+                <br>
+                <span class="suffix-box-title">作者签名</span>：只有学习才能让我快乐!
+                <br>
+                <span class="suffix-box-title">关于主题</span>：<a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+                <br>
+                <span class="suffix-box-title">版权声明</span>：文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+                <br>
             </div>
-            <div class="clear"></div>
-            <div class="article-info">
-                <span>
-                    <i class="iconfont icon-time"></i> 发表时间：2021-08-02
-                </span>
-                
-                    <span id="/2021/08/02/MapReduce/" class="leancloud_visitors" data-flag-title="MapReduce笔记">
-                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                    </span>
-                
-                <span>
-                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2021/08/02/MapReduce/"></span>
-                </span>
-            </div>
-            <div class="clear"></div>     
+            <div style="clear: both;"></div>
         </div>
-    
-        <div class="article">
-            <div class="article-title">
-                <a href="/2021/07/20/HDFSshell%E6%93%8D%E4%BD%9C/">hdfs shell操作</a>
+    </div>
+    <div class="article-footer">
+        
+            <div class="category">
+                分类：
                 
-                    <span class="article-sticky">置顶</span>
-                
-            </div>
-            <div class="article-abstract">
+                    <a href="/category/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a>
                 
             </div>
-            <div class="clear"></div>
-            <div class="article-info">
-                <span>
-                    <i class="iconfont icon-time"></i> 发表时间：2021-07-20
-                </span>
+        
+        
+            <div class="tag">
+                标签：
                 
-                    <span id="/2021/07/20/HDFSshell操作/" class="leancloud_visitors" data-flag-title="hdfs shell操作">
-                        <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                    </span>
+                    <a href="/tag/hadoop/">hadoop</a>
                 
-                <span>
-                    <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2021/07/20/HDFSshell操作/"></span>
-                </span>
             </div>
-            <div class="clear"></div>     
+        
+        <div class="article-prev-next">
+            
+            
+                <a href="/2021/07/23/log4%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF/" class="next-prefix">» </a> 下一篇：    <a href="/2021/07/23/log4%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF/" title="发布于 2021-07-23 12:00">log4配置信息</a>
+            
         </div>
+    </div>
     
-    
+    <div class="article-comments">
+        <div class="comments-title">
+            评论列表
+        </div>
+        <div class="comments-content">
+        </div>
+    </div>
+
 </div>
 
     </div>
